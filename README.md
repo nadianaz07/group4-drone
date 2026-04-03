@@ -62,3 +62,78 @@ FROM Trip JOIN Drone ON Trip.Drone_droneID = Drone.droneID JOIN shipping_destina
 WHERE destinationAddress LIKE '%Athens%' and model = "AeroX Pro";
 
 <img width="630" height="126" alt="image" src="https://github.com/user-attachments/assets/910f1456-d372-4288-bb3c-3df404f237b2" />
+
+# Drone and status
+Managerial Explanation: This query gives managers a quick snapshot of the current condition of the fleet by showing each drone’s status, battery level, and flight hours. It helps support day-to-day operational decisions by showing which drones may be available, which may need attention soon, and which are approaching maintenance thresholds.
+
+SELECT Drone.droneID, Drone.status, Drone.battery, Drone.flightHours 
+
+FROM Drone;
+
+<img width="394" height="259" alt="image" src="https://github.com/user-attachments/assets/ad606881-bf15-4ed2-bcd4-3a6565be6bcd" />
+
+# Drones needing maintenance (> 50 hours)
+
+Managerial Explanation: This query helps managers identify drones that have exceeded the maintenance threshold and may require servicing. It is useful for preventative maintenance planning, reducing the risk of equipment failure, and making sure the fleet remains safe and reliable during delivery operations.
+
+SELECT Drone.droneID, Drone.flightHours, Drone.status 
+
+FROM Drone WHERE Drone.flightHours > 50;
+
+<img width="570" height="269" alt="image" src="https://github.com/user-attachments/assets/47154156-1f5c-4b06-b542-2b5403ba3614" />
+
+# Packages assigned to trips
+
+Managerial Explanation: This query helps managers understand how packages are being distributed across trips. It is useful for monitoring package loads, verifying that delivery assignments are being made correctly, and evaluating whether trips are being used efficiently to carry multiple deliveries at once.
+
+SELECT Trip_Packages.Trip_TripID, Packages.packageID, Packages.packageType, Packages.weight, Packages.packageContent 
+
+FROM Trip_Packages 
+
+JOIN Packages ON Trip_Packages.Packages_packageID = Packages.packageID;
+
+<img width="656" height="475" alt="image" src="https://github.com/user-attachments/assets/55b7928b-62a2-4b91-a82a-5a6b743cb53f" />
+
+# Total distance per drone
+Managerial Explanation: This query allows managers to measure how heavily each drone is being used by showing the total distance it has traveled. It helps with workload balancing, identifying high-use drones, planning maintenance more effectively, and evaluating whether fleet usage is being distributed efficiently.
+
+SELECT Trip.Drone_droneID, SUM(Trip.tripDistance) AS total_distance_flown
+
+FROM Trip GROUP BY Trip.Drone_droneID;
+
+<img width="413" height="230" alt="image" src="https://github.com/user-attachments/assets/c7522ecd-e810-49f8-ab26-a46c8fc43764" />
+
+# Packages with destination
+Managerial Explanation: This query helps managers track what packages are going to which delivery destinations. It is useful for monitoring delivery patterns, confirming routing accuracy, and understanding customer demand by location. Over time, this can support better route planning and service allocation.
+
+SELECT packageID, packageType, weight, destinationAddress 
+
+FROM Packages JOIN shipping_destination ON Packages.shipping_destination_destinationID = shipping_destination.destinationID;
+
+# Complex Queries
+Use this to see which drones that are in flight are low on battery (and need to find a charging station soon)
+
+Managerial Explanation: This query helps managers quickly evaluate which active drones are in strong condition and which may need charging soon. Instead of only showing a battery number, it translates battery levels into more practical categories, making it easier to prioritize operational decisions and respond quickly when a drone may need to leave service for charging.
+
+SELECT *, CASE 
+
+          WHEN battery > 67 THEN "Good to go" 
+          
+          WHEN battery > 33 THEN "Monitor Battery" 
+          
+          WHEN battery <= 32 THEN "Charge Soon" 
+          
+      END AS BatteryLevel 
+      
+FROM Drone 
+
+WHERE status = "In-Flight";
+
+<img width="640" height="74" alt="image" src="https://github.com/user-attachments/assets/022fc31c-59fb-4a10-8351-3384514b6e41" />
+
+
+
+
+
+
+
