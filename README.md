@@ -53,7 +53,7 @@ Charging stations can only serve one drone at a time, with start and end times r
 # Simple Queries:
 Query for drone models in the Athens area that is AeroX Pro
 
-# Managerial Explanation: This query helps management identify which deliveries in the Athens area are being handled by a specific drone model. This is useful for tracking how certain models are being deployed in different locations, evaluating model performance in a target service area, and supporting decisions about where particular drone types should be used most often.
+<emphasize> Managerial Explanation: <emphasize> This query helps management identify which deliveries in the Athens area are being handled by a specific drone model. This is useful for tracking how certain models are being deployed in different locations, evaluating model performance in a target service area, and supporting decisions about where particular drone types should be used most often.
 
 SELECT shipping_destination.destinationAddress, Drone.model 
 
