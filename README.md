@@ -64,7 +64,7 @@ WHERE destinationAddress LIKE '%Athens%' and model = "AeroX Pro";
 <img width="630" height="126" alt="image" src="https://github.com/user-attachments/assets/910f1456-d372-4288-bb3c-3df404f237b2" />
 
 # Drone and status
-# Managerial Explanation: This query gives managers a quick snapshot of the current condition of the fleet by showing each drone’s status, battery level, and flight hours. It helps support day-to-day operational decisions by showing which drones may be available, which may need attention soon, and which are approaching maintenance thresholds.
+- Managerial Explanation: This query gives managers a quick snapshot of the current condition of the fleet by showing each drone’s status, battery level, and flight hours. It helps support day-to-day operational decisions by showing which drones may be available, which may need attention soon, and which are approaching maintenance thresholds.
 
 SELECT Drone.droneID, Drone.status, Drone.battery, Drone.flightHours 
 
