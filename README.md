@@ -1,7 +1,8 @@
 # group4-drone
 # team name: Sp26_71552_Group 4: "Last-Mile" Urban Logistics (Drone Delivery)
 # Group members:
-Guy Mayer
+Guy Mayer:
+
 David Moreno: 
 
 Mariana Munoz: https://github.com/Mariana-Munoz-70445 
