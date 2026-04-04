@@ -138,6 +138,71 @@ WHERE status = "In-Flight";
 
 <img width="640" height="74" alt="image" src="https://github.com/user-attachments/assets/022fc31c-59fb-4a10-8351-3384514b6e41" />
 
+# This query lists the drone ID, status, facility address, average speed in miles per minute, and current battery level for faster than average drones with a sufficient battery level.
+**Managerial Explanation: This query is to be used in emergencies, such as same-day-delivery orders or medical emergencies than might need a certain medicine delivered ASAP. It shows managers all the relevant information they might need to decide what drone to use to make those urgent deliveries, such as their battery level and where they're located at the moment. Managers can choose the fastest drone closest to the warehouse where the package is stored to make the delivery.**
+
+SELECT Drone_droneID, Drone.status, facilityAddress, AVG(tripDistance/tripLength) AS avg_drone_mpm, battery
+
+FROM Drone JOIN storage_facility ON facilityID = Storage Facility_facilityID JOIN Trip ON Drone_droneID = droneID 
+
+WHERE battery > 70 GROUP BY Drone_droneID, Drone.status, facilityAddress HAVING avg_drone_mpm < (SELECT AVG(tripDistance/tripLength) FROM Trip) ORDER BY avg_drone_mpm DESC;
+
+<img width="803" height="94" alt="image" src="https://github.com/user-attachments/assets/6904d26a-9b76-4d65-9e83-e917a70815ec" />
+
+# This query calculates how many packages each warehouse has handled and the total weight of those packages, then ranks the warehouses from highest to lowest activity, for warehouses that have handled at least one package.
+
+**Managerial Explanation: This query helps management evaluate warehouse activity by showing how many packages each warehouse has handled and the total weight processed. It is useful for comparing warehouse workload, identifying high-volume locations, and supporting decisions related to staffing, resource allocation, and operational efficiency.**
+
+SELECT Warehouse.warehouseID, COUNT(Packages.packageID) AS TotalPackagesHandled, SUM(Packages.weight) AS TotalWeightHandled 
+
+FROM Warehouse 
+
+JOIN Packages ON Warehouse.warehouseID = Packages.Warehouse_warehouseID 
+
+GROUP BY Warehouse.warehouseID HAVING COUNT(Packages.packageID) > 0 
+
+ORDER BY TotalPackagesHandled DESC;
+
+<img width="553" height="175" alt="image" src="https://github.com/user-attachments/assets/3c04a324-d80a-46c7-b2bd-b62836ec55c1" />
+
+# SUB QUERY: Drones with above average flight hours
+
+**Managerial Explanation: This query helps managers identify drones that are being used more heavily than the rest of the fleet. It is useful for spotting overutilized assets, determining which drones may need closer monitoring, and making better decisions about balancing usage across the fleet.**
+
+SELECT Drone.droneID, Drone.flightHours
+
+FROM Drone 
+
+WHERE Drone.flightHours > ( SELECT AVG(Drone.flightHours) FROM Drone);
+
+<img width="250" height="148" alt="image" src="https://github.com/user-attachments/assets/3d41e979-778e-469b-bc9b-a7e8d984267d" />
+
+# NOT EXISTS: Inactive maintenance workers
+
+**Managerial Explanation: This helps managers identify maintenance workers who haven't operated on any drones in 2026. This will help clear the database of workers who have been laid off but yet removed from the system or who haven't been coming to work.**
+
+SELECT Technicians.technicianID, Technicians.techniciansFName, Technicians.techniciansLName 
+
+FROM Technicians 
+
+WHERE NOT EXISTS (SELECT * FROM maintenance_logs WHERE maintenance_logs.Technicians_technicianID = Technicians.technicianID AND maintenanceDate > '2026-01-01 00:00:00');
+
+<img width="666" height="199" alt="image" src="https://github.com/user-attachments/assets/62139abb-6a1d-4a9c-b47d-23a1d1785b03" />
+
+# Find drones that have at least one trip over 10 miles
+
+**Managerial Explanation: This query helps managers identify drones that are being used for longer-distance deliveries. This is useful for evaluating route demands, determining which drones are handling more intensive assignments, and assessing whether long-distance trips are being assigned appropriately based on drone capability and battery constraints.**
+
+SELECT Drone.droneID 
+
+FROM Drone 
+
+WHERE EXISTS (SELECT * FROM Trip WHERE Trip.Drone_droneID = Drone.droneID AND Trip.tripDistance > 10);
+
+<img width="174" height="286" alt="image" src="https://github.com/user-attachments/assets/008b2d8e-3840-4377-bcdc-23688d53213d" />
+
+
+
 
 
 
