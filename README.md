@@ -49,6 +49,13 @@ Maintenance logs must be created when a drone exceeds 50 flight hours.
 Charging stations can only serve one drone at a time, with start and end times recorded.
 
 # Data Dictionary
+[Mist 4610 data dict.pdf](https://github.com/user-attachments/files/26470808/Mist.4610.data.dict.pdf)
+<img width="846" height="927" alt="image" src="https://github.com/user-attachments/assets/3232a2d6-6118-489d-b2f4-c679b631c3e4" />
+<img width="845" height="929" alt="image" src="https://github.com/user-attachments/assets/7f350c78-993f-4760-b760-274e2067823f" />
+<img width="809" height="882" alt="image" src="https://github.com/user-attachments/assets/9625a715-4f4a-4bad-a760-15ca047c8301" />
+<img width="734" height="935" alt="image" src="https://github.com/user-attachments/assets/0f927258-f264-491e-ad57-b7d7d8625ad3" />
+<img width="734" height="911" alt="image" src="https://github.com/user-attachments/assets/814b5fc8-cd16-4d5d-9ab4-07ad5c40ab7a" />
+
 
 # Simple Queries:
 Query for drone models in the Athens area that is AeroX Pro
